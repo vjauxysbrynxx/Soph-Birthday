@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sophiafy Wrapped</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app-container {
+    position: relative;
+    width: 100%;
+    max-width: 414px;
+    height: 100%;
+    max-height: 896px;
+    background: #121212;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  }
+
+  /* Progress Bars */
+  .progress-container {
+    position: absolute;
+    top: 15px;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+  }
+
+  /* Tap Controls */
+  .tap-zones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 20;
+  }
+  .tap-left { width: 30%; height: 100%; cursor: pointer; }
+  .tap-right { width: 70%; height: 100%; cursor: pointer; }
+
+  /* Slide Foundations */
+  .slide {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 5;
+  }
+
+  /* Vibrant Backgrounds */
+  .bg-1 { background: linear-gradient(135deg, #FF3366, #FF9933); }
+  .bg-2 { background: linear-gradient(135deg, #7928CA, #FF0080); }
+  .bg-3 { background: linear-gradient(135deg, #00C9FF, #92FE9D); }
+  .bg-4 { background: linear-gradient(135deg, #F09819, #EDDE5D); }
+  .bg-5 { background: linear-gradient(135deg, #ff0844, #ffb199); }
+  .bg-6 { background: linear-gradient(135deg, #e14fad, #f9d423); }
+  .bg-7 { background: linear-gradient(135deg, #f77062, #fe5196); } /* New romantic pink/red */
+  .bg-8 { background: linear-gradient(135deg, #11998e, #38ef7d); } /* Final celebratory green */
+
+  /* Floating Background Elements */
+  .shape {
+    position: absolute;
+    filter: blur(40px);
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: float 10s infinite ease-in-out alternate;
+    z-index: -1;
+  }
+  .shape-1 { width: 300px; height: 300px; background: rgba(255,255,255,0.2); top: -10%; left: -20%; }
+  .shape-2 { width: 250px; height: 250px; background: rgba(0,0,0,0.2); bottom: -10%; right: -20%; animation-delay: -5s; }
+
+  @keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+  }
+
+  /* Typography & Staggered Animations */
+  .content { z-index: 2; width: 100%; height: 100%; position: relative;}
+  
+  .content h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .content h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+  }
+
+  .content p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .huge-number {
+    font-size: 5.5rem;
+    font-weight: 900;
+    margin: 20px 0;
+    color: transparent;
+    -webkit-text-stroke: 2px white;
+  }
+
+  /* Initial hidden state for animation */
+  .anim-item {
+    transform: translateY(40px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .slide.active .anim-item {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Stagger delays */
+  .delay-1 { transition-delay: 0.2s; }
+  .delay-2 { transition-delay: 0.4s; }
+  .delay-3 { transition-delay: 0.6s; }
+  .delay-4 { transition-delay: 0.8s; } 
+  .delay-5 { transition-delay: 1.0s; }
+
+  /* Animated Data Bars */
+  .data-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .data-label { width: 120px; }
+  .data-bar-track {
+    flex: 1;
+    height: 24px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-left: 10px;
+  }
+  .data-bar-fill {
+    height: 100%;
+    background: white;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+  }
+
+  /* Cutout Frame styling */
+  .cutout-frame {
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 15px rgba(0, 201, 255, 0.7);
+    overflow: hidden;
+    object-fit: cover;
+    position: absolute;
+  }
+
+  .memoji-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+
+  /* --- UNIQUE LAYOUTS PER SLIDE --- */
+  .cutout-small { width: 90px; height: 90px; }
+  .cutout-med { width: 120px; height: 120px; }
+  .cutout-large { width: 150px; height: 150px; }
+
+  /* Layout S1: Intro */
+  .layout-s1 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+  .layout-s1 .c1 { top: 10%; left: 10%; }
+  .layout-s1 .c2 { bottom: 10%; right: 10%; }
+
+  /* Layout S2: Split */
+  .layout-s2 .text-block { position: absolute; top: 10%; left: 5%; width: 60%; text-align: left;}
+  .layout-s2 .c1 { bottom: 35%; right: 15%; }
+  .layout-s2 .c2 { bottom: 15%; right: 5%; }
+  .layout-s2 .c3 { top: 5%; right: 25%; width: 70px; height: 70px;}
+
+  /* Layout S3: Grid */
+  .layout-s3 .data-block { position: absolute; top: 25%; left: 0; width: 100%; text-align: center; }
+  .layout-s3 .c1 { top: 5%; left: 5%; }
+  .layout-s3 .c2 { top: 5%; right: 5%; }
+  .layout-s3 .c3 { bottom: 5%; left: 5%; }
+  .layout-s3 .c4 { bottom: 5%; right: 5%; }
+
+  /* Layout S4: Overlapping */
+  .layout-s4 .quote-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+  .layout-s4 .c1 { top: 10%; right: 15%; opacity: 0.8; }
+  .layout-s4 .c2 { bottom: 10%; left: 10%; opacity: 0.8; }
+
+  /* Layout S5: Trips */
+  .layout-s5 .text-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+  .layout-s5 .c1 { top: 10%; left: 15%; }
+  .layout-s5 .c2 { bottom: 10%; right: 15%; }
+
+  /* Layout S6: Build-Up (Suspense) */
+  .layout-s6 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+  .layout-s6 .c1 { top: 10%; right: 10%; }
+  .layout-s6 .c2 { bottom: 10%; left: 10%; }
+
+  /* Layout S7: Reveal */
+  .layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+  .layout-s7 .c1 { top: 10%; left: 30%; width: 180px; height: 180px;}
+  .layout-s7 .c2 { top: 50%; left: 10%; width: 70px; height: 70px;}
+  .layout-s7 .c3 { top: 55%; right: 10%; width: 70px; height: 70px;}
+
+  /* Layout S8: Finale */
+  .layout-s8 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+  .layout-s8 .central-memoji { top: 15%; left: 30%; width: 160px; height: 160px; z-index: 5; }
+  .layout-s8 .c1 { top: 10%; left: 5%; width: 90px; height: 90px;}
+  .layout-s8 .c2 { top: 25%; right: 5%; width: 90px; height: 90px;}
+
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    opacity: 0;
+  }
+
+  @keyframes fall {
+    0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+    100% { opacity: 1; transform: translateY(100vh) rotate(720deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container" id="app">
+  <div class="progress-container" id="progress-container">
+  </div>
+
+  <div class="tap-zones">
+    <div class="tap-left"></div>
+    <div class="tap-right"></div>
+  </div>
+
+  <div class="slide bg-1 active">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s1">
+        <div class="cutout-frame cutout-med c1 anim-item delay-1">
+            <img src="images/cutout1_s1.png" alt="Her Photo 1" class="memoji-image">
+        </div>
+        <div class="text-block">
+            <h2 class="anim-item delay-1">Sophiafy Wrapped</h2>
+            <h1 class="anim-item delay-2">You Survived.</h1>
+            <p class="anim-item delay-3">Let's look at the data behind your last 365 days.</p>
+        </div>
+        <div class="cutout-frame cutout-med c2 anim-item delay-5">
+            <img src="images/cutout2_s1.png" alt="Her Photo 2" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-2">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s2">
+        <div class="cutout-frame cutout-large c1 anim-item delay-1">
+            <img src="images/cutout1_s2.png" alt="Her Photo 1" class="memoji-image">
+        </div>
+        <div class="cutout-frame cutout-med c2 anim-item delay-5">
+            <img src="images/cutout2_s2.png" alt="Her Photo 2" class="memoji-image">
+        </div>
+        <div class="cutout-frame c3 anim-item delay-3">
+            <img src="images/cutout3_s2.png" alt="Her Photo 3" class="memoji-image">
+        </div>
+        <div class="text-block">
+            <h2 class="anim-item delay-1">Late Night Lobbies</h2>
+            <p class="anim-item delay-2">You spent exactly</p>
+            <div class="huge-number anim-item delay-2">1,200</div>
+            <h1 class="anim-item delay-3">HOURS</h1>
+            <p class="anim-item delay-3">on Discord hangouts & carrying me in CODM.</p>
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-3">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s3">
+        <div class="cutout-frame cutout-small c1 anim-item delay-1">
+            <img src="images/cutout1_s3.png" alt="Mood Icon 1" class="memoji-image">
+        </div>
+        <div class="cutout-frame cutout-small c2 anim-item delay-5">
+            <img src="images/cutout2_s3.png" alt="Mood Icon 2" class="memoji-image">
+        </div>
+        <div class="data-block">
+            <h1 class="anim-item delay-1" style="font-size: 2.8rem;">Top Cravings</h1>
+            <div class="anim-item delay-2" style="margin-top: 30px;">
+                <div class="data-row">
+                <div class="data-label">7/11 Runs</div>
+                <div class="data-bar-track"><div class="data-bar-fill" data-width="85%"></div></div>
+                </div>
+                <div class="data-row">
+                <div class="data-label">Drive-Thrus</div>
+                <div class="data-bar-track"><div class="data-bar-fill" data-width="65%"></div></div>
+                </div>
+                <div class="data-row">
+                <div class="data-label">Steakhouses</div>
+                <div class="data-bar-track"><div class="data-bar-fill" data-width="40%"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="cutout-frame cutout-small c3 anim-item delay-3">
+            <img src="images/cutout3_s3.png" alt="Mood Icon 3" class="memoji-image">
+        </div>
+        <div class="cutout-frame cutout-small c4 anim-item delay-4">
+            <img src="images/cutout4_s3.png" alt="Mood Icon 4" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-4">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s4">
+        <div class="cutout-frame cutout-med c1 anim-item delay-5">
+            <img src="images/cutout1_s4.png" alt="Her Photo 1" class="memoji-image">
+        </div>
+        <div class="quote-block">
+            <h2 class="anim-item delay-1">Fastest Growing Asset</h2>
+            <h1 class="anim-item delay-2" style="font-size: 3.5rem;">Your Funko Collection.</h1>
+            <p class="anim-item delay-3" style="opacity: 0.8;">(Seriously, we are running out of shelf space.)</p>
+        </div>
+        <div class="cutout-frame cutout-med c2 anim-item delay-1">
+            <img src="images/cutout2_s4.png" alt="Her Photo 2" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-5">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s5">
+        <div class="cutout-frame cutout-med c1 anim-item delay-1">
+            <img src="images/cutout1_s5.png" alt="Her Photo 1" class="memoji-image">
+        </div>
+        <div class="text-block">
+            <h2 class="anim-item delay-1">Top Destinations</h2>
+            <h1 class="anim-item delay-2">Iloilo & Miagao.</h1>
+            <p class="anim-item delay-3">From our quarterly city escapes to our hometown adventures.</p>
+        </div>
+        <div class="cutout-frame cutout-med c2 anim-item delay-5">
+            <img src="images/cutout2_s5.png" alt="Her Photo 2" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-6">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s6">
+        <div class="cutout-frame cutout-med c1 anim-item delay-1">
+            <img src="images/cutout1_s6.png" alt="Small Cutout" class="memoji-image">
+        </div>
+        <div class="text-block">
+            <h2 class="anim-item delay-1">But Out Of All The Data...</h2>
+            <h1 class="anim-item delay-2">One Metric Stood Out.</h1>
+            <p class="anim-item delay-3">And it was not even close.</p>
+        </div>
+        <div class="cutout-frame cutout-small c2 anim-item delay-5">
+            <img src="images/cutout2_s6.png" alt="Small Cutout 2" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-7">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s7">
+        <div class="cutout-frame c1 anim-item delay-1">
+            <img src="images/cutout1_s7.png" alt="Large Cutout" class="memoji-image">
+        </div>
+        <div class="cutout-frame cutout-small c2 anim-item delay-4">
+            <img src="images/cutout2_s7.png" alt="Small Cutout 1" class="memoji-image">
+        </div>
+        <div class="text-block">
+            <h2 class="anim-item delay-1">Top Phenomenon</h2>
+            <h1 class="anim-item delay-2">Falling For You.</h1>
+            <p class="anim-item delay-3">Every single day.</p>
+        </div>
+        <div class="cutout-frame cutout-small c3 anim-item delay-5">
+            <img src="images/cutout3_s7.png" alt="Small Cutout 2" class="memoji-image">
+        </div>
+    </div>
+  </div>
+
+  <div class="slide bg-8" id="final-slide">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="content layout-s8">
+        <div class="cutout-frame central-memoji anim-item delay-4">
+            <img src="images/your_animoji_here.png" alt="Her Memoji Portrait" class="memoji-image">
+        </div>
+        <div class="cutout-frame c1 anim-item delay-1">
+            <img src="images/cutout1_s8.png" alt="Celebration photo 1" class="memoji-image">
+        </div>
+        <div class="cutout-frame c2 anim-item delay-5">
+            <img src="images/cutout2_s8.png" alt="Celebration photo 2" class="memoji-image">
+        </div>
+        <div class="celebration-block">
+            <h2 class="anim-item delay-1">My Favorite Person</h2>
+            <h1 class="anim-item delay-2">Happy Birthday.</h1>
+            <p class="anim-item delay-3">Here is to all the beautiful years ahead of us.</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const tapLeft = document.querySelector('.tap-left');
+  const tapRight = document.querySelector('.tap-right');
+  const progressContainer = document.getElementById('progress-container');
+  const appContainer = document.getElementById('app');
+  
+  let currentIndex = 0;
+  let timer;
+  const duration = 6500; 
+
+  slides.forEach(() => {
+    const bar = document.createElement('div');
+    bar.className = 'progress-bar';
+    bar.innerHTML = '<div class="progress-fill"></div>';
+    progressContainer.appendChild(bar);
+  });
+  const fills = document.querySelectorAll('.progress-fill');
+
+  function resetFills() {
+    fills.forEach((fill, index) => {
+      fill.style.transition = 'none';
+      if (index < currentIndex) fill.style.width = '100%';
+      else fill.style.width = '0%';
+    });
+  }
+
+  function triggerSlideAnimations(slide) {
+    const dataBars = slide.querySelectorAll('.data-bar-fill');
+    dataBars.forEach(bar => {
+      bar.style.width = '0%'; 
+      setTimeout(() => {
+        bar.style.width = bar.getAttribute('data-width');
+      }, 50); 
+    });
+
+    if(slide.id === 'final-slide') {
+      fireConfetti();
+    }
+  }
+
+  function goToSlide(index) {
+    clearTimeout(timer);
+    if (index < 0) index = 0;
+    
+    if (index >= slides.length) {
+      fills[fills.length - 1].style.width = '100%';
+      return; 
+    }
+
+    currentIndex = index;
+    slides.forEach(slide => slide.classList.remove('active'));
+    
+    const currentSlide = slides[currentIndex];
+    currentSlide.classList.add('active');
+    
+    triggerSlideAnimations(currentSlide);
+    resetFills();
+
+    setTimeout(() => {
+      fills[currentIndex].style.transition = `width ${duration}ms linear`;
+      fills[currentIndex].style.width = '100%';
+    }, 50);
+
+    timer = setTimeout(() => {
+      goToSlide(currentIndex + 1);
+    }, duration);
+  }
+
+  let confettiFired = false;
+  function fireConfetti() {
+    if(confettiFired) return;
+    confettiFired = true;
+    const colors = ['#FF3366', '#00C9FF', '#EDDE5D', '#ffffff'];
+    
+    for(let i=0; i<60; i++) {
+      let conf = document.createElement('div');
+      conf.className = 'confetti';
+      conf.style.left = Math.random() * 100 + '%';
+      conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      conf.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
+      conf.style.animationDelay = `${Math.random() * 1}s`;
+      appContainer.appendChild(conf);
+    }
+  }
+
+  tapLeft.addEventListener('click', () => goToSlide(currentIndex - 1));
+  tapRight.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+  goToSlide(0);
+</script>
+</body>
+</html>
