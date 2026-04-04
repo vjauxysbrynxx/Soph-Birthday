@@ -1,0 +1,320 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  position: relative;
+  width: 100%;
+  max-width: 414px;
+  height: 100%;
+  max-height: 896px;
+  background: #121212;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+/* Progress Bars */
+.progress-container {
+  position: absolute;
+  top: 15px;
+  left: 5%;
+  width: 90%;
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+}
+
+/* Tap Controls */
+.tap-zones {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 20;
+}
+.tap-left { width: 30%; height: 100%; cursor: pointer; }
+.tap-right { width: 70%; height: 100%; cursor: pointer; }
+
+/* Slide Foundations */
+.slide {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+/* Vibrant Backgrounds */
+.bg-1 { background: linear-gradient(135deg, #FF3366, #FF9933); }
+.bg-2 { background: linear-gradient(135deg, #7928CA, #FF0080); }
+.bg-3 { background: linear-gradient(135deg, #00C9FF, #92FE9D); }
+.bg-4 { background: linear-gradient(135deg, #F09819, #EDDE5D); }
+.bg-5 { background: linear-gradient(135deg, #ff0844, #ffb199); }
+.bg-6 { background: linear-gradient(135deg, #e14fad, #f9d423); }
+.bg-7 { background: linear-gradient(135deg, #f77062, #fe5196); } 
+.bg-8 { background: linear-gradient(135deg, #11998e, #38ef7d); } 
+.bg-9 { background: linear-gradient(135deg, #FF1744, #FF6E40); }
+
+/* Floating Background Elements */
+.shape {
+  position: absolute;
+  filter: blur(40px);
+  opacity: 0.6;
+  border-radius: 50%;
+  animation: float 10s infinite ease-in-out alternate;
+  z-index: -1;
+}
+.shape-1 { width: 300px; height: 300px; background: rgba(255,255,255,0.2); top: -10%; left: -20%; }
+.shape-2 { width: 250px; height: 250px; background: rgba(0,0,0,0.2); bottom: -10%; right: -20%; animation-delay: -5s; }
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* Typography & Staggered Animations */
+.content { z-index: 2; width: 100%; height: 100%; position: relative;}
+
+.content h2 {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.content h1 {
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+}
+
+.content p {
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.huge-number {
+  font-size: 5.5rem;
+  font-weight: 900;
+  margin: 20px 0;
+  color: transparent;
+  -webkit-text-stroke: 2px white;
+}
+
+/* Initial hidden state for animation */
+.anim-item {
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide.active .anim-item {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+.delay-4 { transition-delay: 0.8s; } 
+.delay-5 { transition-delay: 1.0s; }
+
+/* Animated Data Bars */
+.data-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.data-label { width: 120px; }
+.data-bar-track {
+  flex: 1;
+  height: 24px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.data-bar-fill {
+  height: 100%;
+  background: white;
+  width: 0%;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+}
+
+/* Cutout Frame styling */
+.cutout-frame {
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 15px rgba(0, 201, 255, 0.7);
+  overflow: hidden;
+  object-fit: cover;
+  position: absolute;
+}
+
+.memoji-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+/* --- UNIQUE LAYOUTS PER SLIDE --- */
+.cutout-small { width: 90px; height: 90px; }
+.cutout-med { width: 120px; height: 120px; }
+.cutout-large { width: 150px; height: 150px; }
+
+/* Layout S1: Intro */
+.layout-s1 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+.layout-s1 .c1 { top: 10%; left: 10%; }
+.layout-s1 .c2 { bottom: 10%; right: 10%; }
+
+/* Layout S2: Split */
+.layout-s2 .text-block { position: absolute; top: 10%; left: 5%; width: 60%; text-align: left;}
+.layout-s2 .c1 { bottom: 35%; right: 15%; }
+.layout-s2 .c2 { bottom: 15%; right: 5%; }
+.layout-s2 .c3 { top: 5%; right: 25%; width: 70px; height: 70px;}
+
+/* Layout S3: Grid */
+.layout-s3 .data-block { position: absolute; top: 25%; left: 0; width: 100%; text-align: center; }
+.layout-s3 .c1 { top: 5%; left: 5%; }
+.layout-s3 .c2 { top: 5%; right: 5%; }
+.layout-s3 .c3 { bottom: 5%; left: 5%; }
+.layout-s3 .c4 { bottom: 5%; right: 5%; }
+
+/* Layout S4: Overlapping */
+.layout-s4 .quote-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+.layout-s4 .c1 { top: 10%; right: 15%; opacity: 0.8; }
+.layout-s4 .c2 { bottom: 10%; left: 10%; opacity: 0.8; }
+
+/* Layout S5: Trips */
+.layout-s5 .text-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+.layout-s5 .c1 { top: 10%; left: 15%; }
+.layout-s5 .c2 { bottom: 10%; right: 15%; }
+
+/* Layout S6: Build-Up (Suspense) */
+.layout-s6 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+.layout-s6 .c1 { top: 10%; right: 10%; }
+.layout-s6 .c2 { bottom: 10%; left: 10%; }
+
+/* Layout S7: Reveal */
+.layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+.layout-s7 .c1 { top: 10%; left: 30%; width: 180px; height: 180px;}
+.layout-s7 .c2 { top: 50%; left: 10%; width: 70px; height: 70px;}
+.layout-s7 .c3 { top: 55%; right: 10%; width: 70px; height: 70px;}
+
+/* Layout S8: Finale */
+.layout-s8 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+.layout-s8 .central-memoji { top: 15%; left: 30%; width: 160px; height: 160px; z-index: 5; }
+.layout-s8 .c1 { top: 10%; left: 5%; width: 90px; height: 90px;}
+.layout-s8 .c2 { top: 25%; right: 5%; width: 90px; height: 90px;}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  opacity: 0;
+}
+
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+  100% { opacity: 1; transform: translateY(100vh) rotate(720deg); }
+}
+
+/* Music Toggle Button */
+.music-toggle {
+  position: absolute;
+  top: 25px;
+  right: 5%;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease;
+}
+
+.music-toggle.playing {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* New Background for the Finale (since Video is now slide 8) */
+.bg-9 { background: linear-gradient(135deg, #11998e, #38ef7d); }
+
+/* Video Frame Styling */
+.layout-video {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-frame {
+  width: 250px;
+  height: 400px; /* Tall portrait ratio, perfect for phone videos */
+  margin: 30px 0;
+  border-radius: 20px;
+  border: 3px solid white;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video fills the frame without stretching */
+}
