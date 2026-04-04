@@ -23,7 +23,6 @@ body {
   box-shadow: 0 0 50px rgba(0,0,0,0.5);
 }
 
-/* Progress Bars */
 .progress-container {
   position: absolute;
   top: 15px;
@@ -48,7 +47,6 @@ body {
   background: #fff;
 }
 
-/* Tap Controls */
 .tap-zones {
   position: absolute;
   top: 0;
@@ -58,10 +56,10 @@ body {
   display: flex;
   z-index: 20;
 }
+
 .tap-left { width: 30%; height: 100%; cursor: pointer; }
 .tap-right { width: 70%; height: 100%; cursor: pointer; }
 
-/* Slide Foundations */
 .slide {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -83,7 +81,6 @@ body {
   z-index: 5;
 }
 
-/* Vibrant Backgrounds */
 .bg-1 { background: linear-gradient(135deg, #FF3366, #FF9933); }
 .bg-2 { background: linear-gradient(135deg, #7928CA, #FF0080); }
 .bg-3 { background: linear-gradient(135deg, #00C9FF, #92FE9D); }
@@ -91,10 +88,12 @@ body {
 .bg-5 { background: linear-gradient(135deg, #ff0844, #ffb199); }
 .bg-6 { background: linear-gradient(135deg, #e14fad, #f9d423); }
 .bg-7 { background: linear-gradient(135deg, #f77062, #fe5196); } 
-.bg-8 { background: linear-gradient(135deg, #11998e, #38ef7d); } 
-.bg-9 { background: linear-gradient(135deg, #FF1744, #FF6E40); }
+.bg-8 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); } 
+.bg-9 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.bg-10 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.bg-11 { background: linear-gradient(135deg, #fa709a, #fee140); }
+.bg-12 { background: linear-gradient(135deg, #11998e, #38ef7d); }
 
-/* Floating Background Elements */
 .shape {
   position: absolute;
   filter: blur(40px);
@@ -103,6 +102,7 @@ body {
   animation: float 10s infinite ease-in-out alternate;
   z-index: -1;
 }
+
 .shape-1 { width: 300px; height: 300px; background: rgba(255,255,255,0.2); top: -10%; left: -20%; }
 .shape-2 { width: 250px; height: 250px; background: rgba(0,0,0,0.2); bottom: -10%; right: -20%; animation-delay: -5s; }
 
@@ -111,7 +111,6 @@ body {
   100% { transform: translate(30px, 50px) scale(1.1); }
 }
 
-/* Typography & Staggered Animations */
 .content { z-index: 2; width: 100%; height: 100%; position: relative;}
 
 .content h2 {
@@ -144,7 +143,6 @@ body {
   -webkit-text-stroke: 2px white;
 }
 
-/* Initial hidden state for animation */
 .anim-item {
   transform: translateY(40px);
   opacity: 0;
@@ -156,14 +154,12 @@ body {
   opacity: 1;
 }
 
-/* Stagger delays */
 .delay-1 { transition-delay: 0.2s; }
 .delay-2 { transition-delay: 0.4s; }
 .delay-3 { transition-delay: 0.6s; }
 .delay-4 { transition-delay: 0.8s; } 
 .delay-5 { transition-delay: 1.0s; }
 
-/* Animated Data Bars */
 .data-row {
   display: flex;
   align-items: center;
@@ -172,7 +168,9 @@ body {
   font-weight: bold;
   font-size: 1.1rem;
 }
+
 .data-label { width: 120px; }
+
 .data-bar-track {
   flex: 1;
   height: 24px;
@@ -181,6 +179,7 @@ body {
   overflow: hidden;
   margin-left: 10px;
 }
+
 .data-bar-fill {
   height: 100%;
   background: white;
@@ -188,7 +187,6 @@ body {
   transition: width 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
 }
 
-/* Cutout Frame styling */
 .cutout-frame {
   display: flex;
   justify-content: center;
@@ -206,57 +204,50 @@ body {
   object-fit: cover; 
 }
 
-/* --- UNIQUE LAYOUTS PER SLIDE --- */
 .cutout-small { width: 90px; height: 90px; }
 .cutout-med { width: 120px; height: 120px; }
 .cutout-large { width: 150px; height: 150px; }
 
-/* Layout S1: Intro */
 .layout-s1 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
 .layout-s1 .c1 { top: 10%; left: 10%; }
 .layout-s1 .c2 { bottom: 10%; right: 10%; }
 
-/* Layout S2: Split */
 .layout-s2 .text-block { position: absolute; top: 10%; left: 5%; width: 60%; text-align: left;}
 .layout-s2 .c1 { bottom: 35%; right: 15%; }
 .layout-s2 .c2 { bottom: 15%; right: 5%; }
 .layout-s2 .c3 { top: 5%; right: 25%; width: 70px; height: 70px;}
 
-/* Layout S3: Grid */
 .layout-s3 .data-block { position: absolute; top: 25%; left: 0; width: 100%; text-align: center; }
 .layout-s3 .c1 { top: 5%; left: 5%; }
 .layout-s3 .c2 { top: 5%; right: 5%; }
 .layout-s3 .c3 { bottom: 5%; left: 5%; }
 .layout-s3 .c4 { bottom: 5%; right: 5%; }
 
-/* Layout S4: Overlapping */
 .layout-s4 .quote-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
 .layout-s4 .c1 { top: 10%; right: 15%; opacity: 0.8; }
 .layout-s4 .c2 { bottom: 10%; left: 10%; opacity: 0.8; }
 
-/* Layout S5: Trips */
 .layout-s5 .text-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
 .layout-s5 .c1 { top: 10%; left: 15%; }
 .layout-s5 .c2 { bottom: 10%; right: 15%; }
 
-/* Layout S6: Build-Up (Suspense) */
 .layout-s6 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
 .layout-s6 .c1 { top: 10%; right: 10%; }
 .layout-s6 .c2 { bottom: 10%; left: 10%; }
 
-/* Layout S7: Reveal */
 .layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
 .layout-s7 .c1 { top: 10%; left: 30%; width: 180px; height: 180px;}
 .layout-s7 .c2 { top: 50%; left: 10%; width: 70px; height: 70px;}
 .layout-s7 .c3 { top: 55%; right: 10%; width: 70px; height: 70px;}
 
-/* Layout S8: Finale */
-.layout-s8 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
-.layout-s8 .central-memoji { top: 15%; left: 30%; width: 160px; height: 160px; z-index: 5; }
-.layout-s8 .c1 { top: 10%; left: 5%; width: 90px; height: 90px;}
-.layout-s8 .c2 { top: 25%; right: 5%; width: 90px; height: 90px;}
+.layout-s8 .message-block { position: absolute; top: 40%; left: 10%; width: 80%; text-align: center; }
+.layout-s8 .c1 { top: 15%; left: 50%; transform: translateX(-50%); width: 140px; height: 140px; }
 
-/* Confetti */
+.layout-s9 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+.layout-s9 .central-memoji { top: 15%; left: 30%; width: 160px; height: 160px; z-index: 5; }
+.layout-s9 .c1 { top: 10%; left: 5%; width: 90px; height: 90px;}
+.layout-s9 .c2 { top: 25%; right: 5%; width: 90px; height: 90px;}
+
 .confetti {
   position: absolute;
   width: 10px;
@@ -270,7 +261,6 @@ body {
   100% { opacity: 1; transform: translateY(100vh) rotate(720deg); }
 }
 
-/* Music Toggle Button */
 .music-toggle {
   position: absolute;
   top: 25px;
@@ -290,10 +280,6 @@ body {
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* New Background for the Finale (since Video is now slide 8) */
-.bg-9 { background: linear-gradient(135deg, #11998e, #38ef7d); }
-
-/* Video Frame Styling */
 .layout-video {
   display: flex;
   flex-direction: column;
@@ -303,7 +289,7 @@ body {
 
 .video-frame {
   width: 250px;
-  height: 400px; /* Tall portrait ratio, perfect for phone videos */
+  height: 400px;
   margin: 30px 0;
   border-radius: 20px;
   border: 3px solid white;
@@ -316,5 +302,37 @@ body {
 .video-frame video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures the video fills the frame without stretching */
+  object-fit: cover;
+}
+
+.layout-video-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 12px;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.vid-cell {
+  width: 100%;
+  aspect-ratio: 9/16;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  background: #000;
+}
+
+.vid-cell video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

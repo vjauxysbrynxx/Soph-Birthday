@@ -3,10 +3,14 @@ const tapLeft = document.querySelector('.tap-left');
 const tapRight = document.querySelector('.tap-right');
 const progressContainer = document.getElementById('progress-container');
 const appContainer = document.getElementById('app');
+const bgMusic = document.getElementById('bg-music');
+const musicToggle = document.getElementById('music-toggle');
 
 let currentIndex = 0;
 let timer;
-const duration = 6500; 
+const duration = 6500;
+let isPlaying = false;
+let firstTap = false;
 
 slides.forEach(() => {
   const bar = document.createElement('div');
@@ -33,6 +37,14 @@ function triggerSlideAnimations(slide) {
     }, 50); 
   });
 
+  document.querySelectorAll('video').forEach(vid => vid.pause());
+  
+  const currentVideos = slide.querySelectorAll('video');
+  currentVideos.forEach(vid => {
+    vid.currentTime = 0;
+    vid.play().catch(e => {});
+  });
+
   if(slide.id === 'final-slide') {
     fireConfetti();
   }
@@ -52,18 +64,6 @@ function goToSlide(index) {
   
   const currentSlide = slides[currentIndex];
   currentSlide.classList.add('active');
-
-  // --- NEW: Video Play/Pause Logic ---
-  // Pause any playing videos on all slides
-  document.querySelectorAll('video').forEach(vid => vid.pause());
-  
-  // If the new current slide has a video, reset it to the beginning and play it
-  const currentVideo = currentSlide.querySelector('video');
-  if (currentVideo) {
-    currentVideo.currentTime = 0;
-    currentVideo.play();
-  }
-  // -----------------------------------
   
   triggerSlideAnimations(currentSlide);
   resetFills();
@@ -95,18 +95,6 @@ function fireConfetti() {
   }
 }
 
-tapLeft.addEventListener('click', () => goToSlide(currentIndex - 1));
-tapRight.addEventListener('click', () => goToSlide(currentIndex + 1));
-
-goToSlide(0);
-
-// --- MUSIC PLAYER LOGIC ---
-const bgMusic = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
-let isPlaying = false;
-let firstTap = false;
-
-// 1. Toggle button functionality
 musicToggle.addEventListener('click', () => {
   if (isPlaying) {
     bgMusic.pause();
@@ -119,21 +107,25 @@ musicToggle.addEventListener('click', () => {
   musicToggle.classList.toggle('playing');
 });
 
-// 2. Auto-start music on the very first screen tap
 function handleFirstTap() {
   if (!firstTap && !isPlaying) {
-    // The play() method returns a promise that can be caught if the browser blocks it
     bgMusic.play().then(() => {
       isPlaying = true;
       musicToggle.innerHTML = '🔊 Playing';
       musicToggle.classList.add('playing');
-    }).catch((error) => {
-      console.log('Autoplay was prevented by the browser.');
-    });
+    }).catch(() => {});
     firstTap = true;
   }
 }
 
-// 3. Attach the tap check to your existing tap zones
-tapLeft.addEventListener('click', handleFirstTap);
-tapRight.addEventListener('click', handleFirstTap);
+tapLeft.addEventListener('click', () => {
+  handleFirstTap();
+  goToSlide(currentIndex - 1);
+});
+
+tapRight.addEventListener('click', () => {
+  handleFirstTap();
+  goToSlide(currentIndex + 1);
+});
+
+goToSlide(0);
