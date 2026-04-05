@@ -446,6 +446,188 @@ body {
   font-weight: 600;
 }
 
+/* Gift Wrap Styles */
+.gift-wrap-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #FF1744, #F50057);
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.6s ease;
+}
+
+.gift-wrap-overlay.opened {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gift-container {
+  text-align: center;
+  cursor: pointer;
+}
+
+.gift-box {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  margin: 0 auto 30px;
+  perspective: 1000px;
+}
+
+.gift-box > div {
+  position: absolute;
+}
+
+.gift-body {
+  width: 200px;
+  height: 100px;
+  background: linear-gradient(135deg, #FFD600, #FFCA28);
+  border-radius: 5px;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.gift-lid {
+  width: 200px;
+  height: 60px;
+  background: linear-gradient(135deg, #FF1744, #F50057);
+  border-radius: 5px 5px 0 0;
+  top: 0;
+  left: 0;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.3);
+  transform-origin: bottom center;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.gift-box:hover .gift-lid {
+  transform: rotateX(120deg);
+}
+
+.ribbon-h {
+  width: 200px;
+  height: 8px;
+  background: linear-gradient(90deg, #FFD600, #FFCA28);
+  top: 56px;
+  left: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.ribbon-v {
+  width: 8px;
+  height: 150px;
+  background: linear-gradient(180deg, #FFD600, #FFCA28);
+  top: 0;
+  left: 96px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+}
+
+.bow {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #FF6F00, #FF1744);
+  border-radius: 50%;
+  top: 20px;
+  left: 80px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.bow::before,
+.bow::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  background: radial-gradient(circle at 50% 50%, #FF6F00, #FF1744);
+  border-radius: 50%;
+  top: 10px;
+}
+
+.bow::before {
+  left: -25px;
+  transform: translateX(-10px);
+}
+
+.bow::after {
+  right: -25px;
+  transform: translateX(10px);
+}
+
+.gift-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin-top: 20px;
+  letter-spacing: 1px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Mobile optimization for gift wrap */
+@media (max-width: 412px) {
+  .gift-box {
+    width: 160px;
+    height: 120px;
+  }
+
+  .gift-body {
+    width: 160px;
+    height: 80px;
+  }
+
+  .gift-lid {
+    width: 160px;
+    height: 50px;
+  }
+
+  .ribbon-h {
+    width: 160px;
+  }
+
+  .ribbon-v {
+    width: 6px;
+    height: 120px;
+    left: 77px;
+  }
+
+  .bow {
+    width: 30px;
+    height: 30px;
+    left: 65px;
+    top: 15px;
+  }
+
+  .bow::before,
+  .bow::after {
+    width: 20px;
+    height: 15px;
+  }
+
+  .bow::before {
+    left: -20px;
+  }
+
+  .bow::after {
+    right: -20px;
+  }
+
+  .gift-text {
+    font-size: 1.1rem;
+  }
+}
+
 /* Mobile optimization for iPhone 15 and smaller screens */
 @media (max-width: 412px) {
   .slide {

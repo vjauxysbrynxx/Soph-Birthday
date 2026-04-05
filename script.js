@@ -7,6 +7,7 @@ const bgMusic = document.getElementById('bg-music');
 const musicToggle = document.getElementById('music-toggle');
 const autonextToggle = document.getElementById('autonext-toggle');
 const timerOverlay = document.getElementById('timer-overlay');
+const giftWrapOverlay = document.getElementById('gift-wrap-overlay');
 
 let currentIndex = 0;
 let timer;
@@ -14,20 +15,23 @@ const duration = 6500;
 let isPlaying = false;
 let firstTap = false;
 let autoNextPaused = false;
+let contentUnlocked = false;
 
 // === TIMER CONFIGURATION ===
 // Set the unlock date and time here (YYYY, MM, DD, HH, MM, SS)
 // Example: new Date(2024, 3, 6, 15, 30, 0) means April 6, 2024 at 3:30 PM
-const UNLOCK_TIME = new Date(2026, 3, 6, 5, 45, 0); // Change this to your desired unlock date/time
+const UNLOCK_TIME = new Date(2026, 3, 6, 0, 00, 0); // Change this to your desired unlock date/time
 
 function updateCountdown() {
   const now = new Date().getTime();
   const unlockMs = UNLOCK_TIME.getTime();
   const distance = unlockMs - now;
 
-  if (distance <= 0) {
-    // Content is unlocked
+  if (distance <= 0 && !contentUnlocked) {
+    // Content is unlocked - show gift wrap
     timerOverlay.classList.add('unlocked');
+    giftWrapOverlay.style.display = 'flex';
+    contentUnlocked = true;
     return;
   }
 
@@ -51,13 +55,15 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Hide controls if still locked
+// Hide gift wrap and controls if still locked
 if (!timerOverlay.classList.contains('unlocked')) {
   musicToggle.style.display = 'none';
   autonextToggle.style.display = 'none';
+  giftWrapOverlay.style.display = 'none';
 } else {
   musicToggle.style.display = 'block';
   autonextToggle.style.display = 'block';
+  giftWrapOverlay.style.display = 'flex';
 }
 
 // Show controls when unlocked
@@ -190,6 +196,21 @@ function handleFirstTap() {
     firstTap = true;
   }
 }
+
+// Gift Wrap Click Handler
+giftWrapOverlay.addEventListener('click', () => {
+  giftWrapOverlay.classList.add('opened');
+  
+  // Show controls after unwrap animation
+  setTimeout(() => {
+    musicToggle.style.display = 'block';
+    autonextToggle.style.display = 'block';
+    
+    // Start the slideshow
+    handleFirstTap();
+    goToSlide(0);
+  }, 600);
+});
 
 tapLeft.addEventListener('click', () => {
   if (timerOverlay.classList.contains('unlocked')) {
