@@ -242,8 +242,8 @@ body {
 
 .layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
 .layout-s7 .c1 { top: 10%; left: 30%; width: 180px; height: 180px;}
-.layout-s7 .c2 { top: 50%; left: 10%; width: 70px; height: 70px;}
-.layout-s7 .c3 { top: 55%; right: 10%; width: 70px; height: 70px;}
+.layout-s7 .c2 { top: 40%; left: 10%; width: 150px; height: 150px;}
+.layout-s7 .c3 { top: 40%; right: 10%; width: 150px; height: 150px;}
 
 .layout-s8 .message-block { position: absolute; top: 40%; left: 10%; width: 80%; text-align: center; }
 .layout-s8 .c1 { top: 15%; left: 50%; transform: translateX(-50%); width: 140px; height: 140px; }
@@ -282,6 +282,25 @@ body {
 }
 
 .music-toggle.playing {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.autonext-toggle {
+  position: absolute;
+  top: 25px;
+  left: 5%;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease;
+}
+
+.autonext-toggle.disabled {
   background: rgba(255, 255, 255, 0.4);
 }
 

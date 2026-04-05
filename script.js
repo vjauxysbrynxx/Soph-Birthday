@@ -5,12 +5,14 @@ const progressContainer = document.getElementById('progress-container');
 const appContainer = document.getElementById('app');
 const bgMusic = document.getElementById('bg-music');
 const musicToggle = document.getElementById('music-toggle');
+const autonextToggle = document.getElementById('autonext-toggle');
 
 let currentIndex = 0;
 let timer;
 const duration = 6500;
 let isPlaying = false;
 let firstTap = false;
+let autoNextPaused = false;
 
 slides.forEach(() => {
   const bar = document.createElement('div');
@@ -73,9 +75,11 @@ function goToSlide(index) {
     fills[currentIndex].style.width = '100%';
   }, 50);
 
-  timer = setTimeout(() => {
-    goToSlide(currentIndex + 1);
-  }, duration);
+  if (!autoNextPaused) {
+    timer = setTimeout(() => {
+      goToSlide(currentIndex + 1);
+    }, duration);
+  }
 }
 
 let confettiFired = false;
@@ -105,6 +109,20 @@ musicToggle.addEventListener('click', () => {
   }
   isPlaying = !isPlaying;
   musicToggle.classList.toggle('playing');
+});
+
+autonextToggle.addEventListener('click', () => {
+  autoNextPaused = !autoNextPaused;
+  if (autoNextPaused) {
+    autonextToggle.innerHTML = 'Autoplay: OFF';
+    clearTimeout(timer);
+  } else {
+    autonextToggle.innerHTML = 'Autoplay: ON';
+    timer = setTimeout(() => {
+      goToSlide(currentIndex + 1);
+    }, duration);
+  }
+  autonextToggle.classList.toggle('disabled');
 });
 
 function handleFirstTap() {
