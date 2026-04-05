@@ -93,6 +93,11 @@ body {
 .bg-10 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
 .bg-11 { background: linear-gradient(135deg, #fa709a, #fee140); }
 .bg-12 { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.bg-13 { background: linear-gradient(135deg, #89f7fe, #66a6ff); }
+.bg-14 { background: linear-gradient(135deg, #fccb90, #d57eeb); }
+.bg-15 { background: linear-gradient(135deg, #FF9A9E, #FECFEF); }
+.bg-16 { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+.bg-17 { background: linear-gradient(135deg, #ff758c, #ff7eb3); }
 
 .shape {
   position: absolute;
