@@ -15,12 +15,13 @@ body {
 .app-container {
   position: relative;
   width: 100%;
-  max-width: 414px;
+  max-width: 390px;
   height: 100%;
-  max-height: 896px;
+  max-height: 844px;
   background: #121212;
   overflow: hidden;
   box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  margin: 0 auto;
 }
 
 .progress-container {
@@ -68,7 +69,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 30px;
+  padding: 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -201,6 +202,7 @@ body {
   overflow: hidden;
   object-fit: cover;
   position: absolute;
+  z-index: 1;
 }
 
 .memoji-image {
@@ -213,42 +215,42 @@ body {
 .cutout-med { width: 120px; height: 120px; }
 .cutout-large { width: 150px; height: 150px; }
 
-.layout-s1 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+.layout-s1 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s1 .c1 { top: 10%; left: 10%; }
 .layout-s1 .c2 { bottom: 10%; right: 10%; }
 
-.layout-s2 .text-block { position: absolute; top: 10%; left: 5%; width: 60%; text-align: left;}
+.layout-s2 .text-block { position: absolute; top: 10%; left: 5%; width: 60%; text-align: left; z-index: 3;}
 .layout-s2 .c1 { bottom: 35%; right: 15%; }
 .layout-s2 .c2 { bottom: 15%; right: 5%; }
 .layout-s2 .c3 { top: 5%; right: 25%; width: 70px; height: 70px;}
 
-.layout-s3 .data-block { position: absolute; top: 25%; left: 0; width: 100%; text-align: center; }
+.layout-s3 .data-block { position: absolute; top: 25%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s3 .c1 { top: 5%; left: 5%; }
 .layout-s3 .c2 { top: 5%; right: 5%; }
 .layout-s3 .c3 { bottom: 5%; left: 5%; }
 .layout-s3 .c4 { bottom: 5%; right: 5%; }
 
-.layout-s4 .quote-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+.layout-s4 .quote-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s4 .c1 { top: 10%; right: 15%; opacity: 0.8; }
 .layout-s4 .c2 { bottom: 10%; left: 10%; opacity: 0.8; }
 
-.layout-s5 .text-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; }
+.layout-s5 .text-block { position: absolute; top: 30%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s5 .c1 { top: 10%; left: 15%; }
 .layout-s5 .c2 { bottom: 10%; right: 15%; }
 
-.layout-s6 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; }
+.layout-s6 .text-block { position: absolute; top: 35%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s6 .c1 { top: 10%; right: 10%; }
 .layout-s6 .c2 { bottom: 10%; left: 10%; }
 
-.layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+.layout-s7 .text-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s7 .c1 { top: 10%; left: 30%; width: 180px; height: 180px;}
 .layout-s7 .c2 { top: 40%; left: 10%; width: 150px; height: 150px;}
 .layout-s7 .c3 { top: 40%; right: 10%; width: 150px; height: 150px;}
 
-.layout-s8 .message-block { position: absolute; top: 40%; left: 10%; width: 80%; text-align: center; }
+.layout-s8 .message-block { position: absolute; top: 40%; left: 10%; width: 80%; text-align: center; z-index: 3; }
 .layout-s8 .c1 { top: 15%; left: 50%; transform: translateX(-50%); width: 140px; height: 140px; }
 
-.layout-s9 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; }
+.layout-s9 .celebration-block { position: absolute; bottom: 10%; left: 0; width: 100%; text-align: center; z-index: 3; }
 .layout-s9 .central-memoji { top: 15%; left: 30%; width: 160px; height: 160px; z-index: 5; }
 .layout-s9 .c1 { top: 10%; left: 5%; width: 90px; height: 90px;}
 .layout-s9 .c2 { top: 25%; right: 5%; width: 90px; height: 90px;}
@@ -309,6 +311,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 }
 
 .video-frame {
@@ -359,4 +362,151 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.timer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s ease, pointer-events 0.5s ease;
+}
+
+.timer-overlay.unlocked {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timer-content {
+  text-align: center;
+  color: white;
+  padding: 30px;
+}
+
+.timer-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+
+.timer-content p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.unlock-time {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  opacity: 0.85;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px 15px;
+  border-radius: 15px;
+  min-width: 70px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.countdown-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+/* Mobile optimization for iPhone 15 and smaller screens */
+@media (max-width: 412px) {
+  .slide {
+    padding: 20px;
+  }
+
+  .content h1 {
+    font-size: 2.5rem;
+  }
+
+  .content h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .content p {
+    font-size: 1.1rem;
+  }
+
+  .huge-number {
+    font-size: 4rem;
+    -webkit-text-stroke: 1.5px white;
+  }
+
+  .data-label {
+    width: 100px;
+    font-size: 0.9rem;
+  }
+
+  .data-row {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+  }
+
+  .video-frame {
+    width: 220px;
+    height: 350px;
+  }
+
+  .cutout-small { width: 70px; height: 70px; }
+  .cutout-med { width: 100px; height: 100px; }
+  .cutout-large { width: 130px; height: 130px; }
+
+  .layout-s7 .c1 { width: 150px; height: 150px; left: 25%; }
+  .layout-s7 .c2 { width: 120px; height: 120px; top: 45%; left: 5%; }
+  .layout-s7 .c3 { width: 120px; height: 120px; top: 45%; right: 5%; }
+
+  .layout-s9 .central-memoji { width: 130px; height: 130px; left: 35%; }
+  .layout-s9 .c1 { width: 70px; height: 70px; }
+  .layout-s9 .c2 { width: 70px; height: 70px; }
+
+  .timer-content h1 {
+    font-size: 2rem;
+  }
+
+  .countdown-item {
+    padding: 15px 12px;
+    min-width: 60px;
+  }
+
+  .countdown-value {
+    font-size: 2rem;
+  }
 }

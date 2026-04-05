@@ -6,6 +6,7 @@ const appContainer = document.getElementById('app');
 const bgMusic = document.getElementById('bg-music');
 const musicToggle = document.getElementById('music-toggle');
 const autonextToggle = document.getElementById('autonext-toggle');
+const timerOverlay = document.getElementById('timer-overlay');
 
 let currentIndex = 0;
 let timer;
@@ -13,6 +14,60 @@ const duration = 6500;
 let isPlaying = false;
 let firstTap = false;
 let autoNextPaused = false;
+
+// === TIMER CONFIGURATION ===
+// Set the unlock date and time here (YYYY, MM, DD, HH, MM, SS)
+// Example: new Date(2024, 3, 6, 15, 30, 0) means April 6, 2024 at 3:30 PM
+const UNLOCK_TIME = new Date(2026, 3, 6, 5, 45, 0); // Change this to your desired unlock date/time
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const unlockMs = UNLOCK_TIME.getTime();
+  const distance = unlockMs - now;
+
+  if (distance <= 0) {
+    // Content is unlocked
+    timerOverlay.classList.add('unlocked');
+    return;
+  }
+
+  // Calculate time units
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Update display
+  document.getElementById('days').textContent = String(days).padStart(2, '0');
+  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+  // Update unlock time display
+  document.getElementById('unlock-time').textContent = UNLOCK_TIME.toLocaleString();
+}
+
+// Initialize timer display
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Hide controls if still locked
+if (!timerOverlay.classList.contains('unlocked')) {
+  musicToggle.style.display = 'none';
+  autonextToggle.style.display = 'none';
+} else {
+  musicToggle.style.display = 'block';
+  autonextToggle.style.display = 'block';
+}
+
+// Show controls when unlocked
+const observer = new MutationObserver(() => {
+  if (timerOverlay.classList.contains('unlocked')) {
+    musicToggle.style.display = 'block';
+    autonextToggle.style.display = 'block';
+  }
+});
+observer.observe(timerOverlay, { attributes: true, attributeFilter: ['class'] });
 
 slides.forEach(() => {
   const bar = document.createElement('div');
@@ -137,13 +192,20 @@ function handleFirstTap() {
 }
 
 tapLeft.addEventListener('click', () => {
-  handleFirstTap();
-  goToSlide(currentIndex - 1);
+  if (timerOverlay.classList.contains('unlocked')) {
+    handleFirstTap();
+    goToSlide(currentIndex - 1);
+  }
 });
 
 tapRight.addEventListener('click', () => {
-  handleFirstTap();
-  goToSlide(currentIndex + 1);
+  if (timerOverlay.classList.contains('unlocked')) {
+    handleFirstTap();
+    goToSlide(currentIndex + 1);
+  }
 });
 
-goToSlide(0);
+// Start slideshow only if content is unlocked
+if (timerOverlay.classList.contains('unlocked')) {
+  goToSlide(0);
+}
