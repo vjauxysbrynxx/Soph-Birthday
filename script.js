@@ -20,7 +20,7 @@ let contentUnlocked = false;
 // === TIMER CONFIGURATION ===
 // Set the unlock date and time here (YYYY, MM, DD, HH, MM, SS)
 // Example: new Date(2024, 3, 6, 15, 30, 0) means April 6, 2024 at 3:30 PM
-const UNLOCK_TIME = new Date(2026, 3, 6, 0, 00, 0); // Change this to your desired unlock date/time
+const UNLOCK_TIME = new Date(2026, 3, 12, 0, 0, 0); // Change this to your desired unlock date/time
 
 function updateCountdown() {
   const now = new Date().getTime();
